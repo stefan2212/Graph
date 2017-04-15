@@ -47,17 +47,13 @@ class Graph{
         int [] culori = new int[noduri.size()];
         for(int i=0;i<noduri.size();i++)
             culori[i]=-1;
-        int k=0;
         culori[nodAles]=0;
-        while(k<muchii.size()) {
             for (Edge edge : muchii) {
                 if (edge.IndexNode1 == nodAles && culori[edge.Index2Node2] == -1) {
                     culori[edge.Index2Node2] = 0;
                     nodAles = edge.Index2Node2;
                 }
             }
-            k++;
-        }
         for(int i=0;i<noduri.size();i++)
             if(culori[i]==-1)
                 return false;
@@ -76,7 +72,7 @@ public class Main {
         g.AddEdge(1, 2);
 
         System.out.printf("Node 1 value is %d \n",g.GetNode(1).Value);
-        g.AddNode(0,0,200);
+        //g.AddNode(0,0,200);
         System.out.printf("Nodes = %d, Edges=%d, Conex=%b\n", g.GetNodesCount(), g.GetEdgesCount(), g.isConex());
     }
 }
