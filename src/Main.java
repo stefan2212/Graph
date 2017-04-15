@@ -46,21 +46,10 @@ class Graph{
     }
 
     public boolean isConex() {
-        int nodAles = 0;
-        int[] culori = new int[noduri.size()];
-        for (int i = 0; i < noduri.size(); i++)
-            culori[i] = -1;
-        culori[nodAles] = 0;
-        while (nodAles<noduri.size()){
-            for (Edge edge : muchii) {
-                if (edge.IndexNode1 == nodAles && culori[edge.Index2Node2] == -1) {
-                    culori[edge.Index2Node2] = 0;
-                }
-            }
-            nodAles++;
-    }
+        DFS(0);
+        System.out.println();
         for(int i=0;i<noduri.size();i++)
-            if(culori[i]==-1)
+            if(visited[i]==0)
                 return false;
         return true;
     }
@@ -117,10 +106,12 @@ public class Main {
         g.AddEdge(2,4);
         g.AddEdge(2,5);
         g.AddEdge(5,3);
+        g.AddNode(100,100,900);
+        g.AddNode(200,200,1000);
+        g.AddEdge(6,7);
         System.out.printf("Node 1 value is %d \n",g.GetNode(1).Value);
         System.out.printf("Nodes = %d, Edges=%d, Conex=%b\n", g.GetNodesCount(), g.GetEdgesCount(), g.isConex());
-        g.displayEdge();
-        g.DFS(4);
+
     }
 }
 
