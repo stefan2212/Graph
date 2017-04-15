@@ -1,4 +1,6 @@
-import java.util.ArrayList;
+import sun.misc.*;
+
+import java.util.*;
 
 class Graph{
 
@@ -7,6 +9,7 @@ class Graph{
 
     private int visited[];
     Stack s;
+    Queue q;
 
     public Graph(){
         noduri=new ArrayList<Node>();
@@ -88,6 +91,39 @@ class Graph{
         }
         s.pop();
     }
+
+    public void BFS(int v){
+        visited = new int[noduri.size()];
+        for(int i = 0 ;i<noduri.size();i++)
+            visited[i]=0;
+        q = new Queue(noduri.size());
+        q.insert(v);
+        BFSUtil(v);
+    }
+
+    public void BFSUtil(int v){
+        visited[v] = 1;
+        System.out.print(v+ "  ");
+        for(Edge e:muchii){
+            if (e.IndexNode1 == v && visited[e.Index2Node2]==0)
+            {
+                int n = e.Index2Node2;
+                q.insert(n);
+                visited[n] = 1;
+
+            }
+            else if(e.Index2Node2 == v && visited[e.IndexNode1]==0)
+            {
+                int n = e.IndexNode1;
+                q.insert(n);
+                visited[n] = 1;
+
+            }
+        }
+        q.remove();
+        if(q.front()!=-1)
+             BFSUtil(q.front());
+    }
 }
 
 public class Main {
@@ -106,11 +142,11 @@ public class Main {
         g.AddEdge(2,4);
         g.AddEdge(2,5);
         g.AddEdge(5,3);
-        g.AddNode(100,100,900);
-        g.AddNode(200,200,1000);
-        g.AddEdge(6,7);
         System.out.printf("Node 1 value is %d \n",g.GetNode(1).Value);
         System.out.printf("Nodes = %d, Edges=%d, Conex=%b\n", g.GetNodesCount(), g.GetEdgesCount(), g.isConex());
+        g.BFS(0);
+
+
 
     }
 }
