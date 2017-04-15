@@ -5,6 +5,9 @@ class Graph{
     private ArrayList<Node> noduri;
     private ArrayList<Edge> muchii;
 
+    private int visited[];
+    Stack s;
+
     public Graph(){
         noduri=new ArrayList<Node>();
         muchii=new ArrayList<Edge>();
@@ -48,7 +51,6 @@ class Graph{
         for (int i = 0; i < noduri.size(); i++)
             culori[i] = -1;
         culori[nodAles] = 0;
-        int k=0;
         while (nodAles<noduri.size()){
             for (Edge edge : muchii) {
                 if (edge.IndexNode1 == nodAles && culori[edge.Index2Node2] == -1) {
@@ -69,6 +71,34 @@ class Graph{
             System.out.println(edge.IndexNode1 + " | " +edge.Index2Node2);
         }
     }
+
+    public void DFS(int v){
+        visited = new int[noduri.size()];
+        for(int i = 0 ;i<noduri.size();i++)
+            visited[i]=0;
+        s = new Stack(noduri.size());
+        DFSUtil(v);
+    }
+
+    private void DFSUtil(int v){
+        visited[v]=1;
+        System.out.print(v+ "  ");
+        s.push(v);
+        for(Edge e: muchii)
+        {
+            if (e.IndexNode1 == s.top()&& visited[e.Index2Node2]==0)
+            {
+                int n = e.Index2Node2;
+                DFSUtil(n);
+            }
+            else if(e.Index2Node2 == s.top() && visited[e.IndexNode1]==0)
+            {
+                int n = e.IndexNode1;
+                DFSUtil(n);
+            }
+        }
+        s.pop();
+    }
 }
 
 public class Main {
@@ -79,11 +109,18 @@ public class Main {
         g.AddNode(10,20,200);
         g.AddNode(20,20,300);
         g.AddNode(20,30,400);
+        g.AddNode(35,35,500);
+        g.AddNode(45,45,600);
         g.AddEdge(0, 1);
         g.AddEdge(1, 2);
         g.AddEdge(0,3);
+        g.AddEdge(2,4);
+        g.AddEdge(2,5);
+        g.AddEdge(5,3);
         System.out.printf("Node 1 value is %d \n",g.GetNode(1).Value);
         System.out.printf("Nodes = %d, Edges=%d, Conex=%b\n", g.GetNodesCount(), g.GetEdgesCount(), g.isConex());
+        g.displayEdge();
+        g.DFS(4);
     }
 }
 
