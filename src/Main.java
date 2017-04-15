@@ -42,22 +42,32 @@ class Graph{
         return noduri.get(index);
     }
 
-    public boolean isConex(){
-        int nodAles=0;
-        int [] culori = new int[noduri.size()];
-        for(int i=0;i<noduri.size();i++)
-            culori[i]=-1;
-        culori[nodAles]=0;
+    public boolean isConex() {
+        int nodAles = 0;
+        int[] culori = new int[noduri.size()];
+        for (int i = 0; i < noduri.size(); i++)
+            culori[i] = -1;
+        culori[nodAles] = 0;
+        int k=0;
+        while (nodAles<noduri.size()){
             for (Edge edge : muchii) {
                 if (edge.IndexNode1 == nodAles && culori[edge.Index2Node2] == -1) {
                     culori[edge.Index2Node2] = 0;
-                    nodAles = edge.Index2Node2;
                 }
             }
+            nodAles++;
+    }
         for(int i=0;i<noduri.size();i++)
             if(culori[i]==-1)
                 return false;
         return true;
+    }
+
+    public void displayEdge(){
+        for(Edge edge:muchii)
+        {
+            System.out.println(edge.IndexNode1 + " | " +edge.Index2Node2);
+        }
     }
 }
 
@@ -68,11 +78,11 @@ public class Main {
         g.AddNode(10,10,100);
         g.AddNode(10,20,200);
         g.AddNode(20,20,300);
+        g.AddNode(20,30,400);
         g.AddEdge(0, 1);
         g.AddEdge(1, 2);
-
+        g.AddEdge(0,3);
         System.out.printf("Node 1 value is %d \n",g.GetNode(1).Value);
-        //g.AddNode(0,0,200);
         System.out.printf("Nodes = %d, Edges=%d, Conex=%b\n", g.GetNodesCount(), g.GetEdgesCount(), g.isConex());
     }
 }
